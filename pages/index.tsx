@@ -2,10 +2,14 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+// import { useFlags, useFlagsmith } from 'flagsmith-es/react';
+import { useFlags } from 'flagsmith/react';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const flags = useFlags(['deposit_enabled']); // only causes re-render if specified flag values / traits change
   return (
     <>
       <Head>
@@ -17,7 +21,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <p>
-            Get started by editing&nbsp;
+            Get started by editing  &nbsp;
             <code className={styles.code}>pages/index.tsx</code>
           </p>
           <div>
@@ -116,6 +120,21 @@ export default function Home() {
               with&nbsp;Vercel.
             </p>
           </a>
+          {flags.deposit_enabled.enabled ?
+          <a
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            className={styles.card}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <h2 className={inter.className}>
+              Earn <span>-&gt;</span>
+            </h2>
+            <p className={inter.className}>
+              Earn about Next.js in an interactive course with&nbsp;quizzes!
+            </p>
+          </a> : null }
+
         </div>
       </main>
     </>
